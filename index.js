@@ -34,5 +34,9 @@ const puppeteer = require('puppeteer');
   await page.waitFor(5000);
   await page.goto(giveawayToGo.giveaway);
 
+  await page.waitFor(10000);
+  await page.waitFor('textarea');
+  await page.type('textarea', '@profile_name', { delay: 642 });
+
   await browser.close();
 })();
