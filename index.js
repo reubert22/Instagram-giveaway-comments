@@ -10,25 +10,29 @@ const puppeteer = require('puppeteer');
       profile: 'https://www.instagram.com/motoart22/', 
       giveaway: 'https://www.instagram.com/p/B-QGm4lFfYa/',
       date: '08/05', 
-      profileName: 'motoart22'
+      profileName: 'motoart22',
+      numberProfilesPerComment: 1
     },
     {
       profile: 'https://www.instagram.com/hugo.milgrau/', 
       giveaway: 'https://www.instagram.com/p/B_pkTiWFKvh/', 
       date: '10/05', 
-      profileName: 'hugo.milgrau'
+      profileName: 'hugo.milgrau',
+      numberProfilesPerComment: 2
     },  
     {
       profile: 'https://www.instagram.com/arnondograu_/', 
       giveaway: 'https://www.instagram.com/p/B_p16xxlahi/', 
       date: '20/05', 
-      profileName: 'arnondograu_'  
+      profileName: 'arnondograu_',
+      numberProfilesPerComment: 2
     },  
     {
       profile: 'https://www.instagram.com/teteurr46/', 
       giveaway: 'https://www.instagram.com/p/B_pkMbbAtrt/', 
       date: '20/05', 
-      profileName: 'teteurr46'
+      profileName: 'teteurr46',
+      numberProfilesPerComment: 3
     }
   ];
 
@@ -39,11 +43,21 @@ const puppeteer = require('puppeteer');
     return giveaway;
   }
 
-  const handleProfileToComment = () => {
-    const number = Math.floor(Math.random() * targetsAccount.length);
-    const profile = targetsAccount[number];
+  const handleProfileToComment = (numberProfilesPerComment) => {
+    profile = "";
+    arrayValidator = [];
+    i = 0;
+    while(i < numberProfilesPerComment) {
+      const number = Math.floor(Math.random() * targetsAccount.length);
+      if(arrayValidator.indexOf(number) === -1){
+        arrayValidator.push(number);
+        profile = profile.concat(' ', targetsAccount[number]);
+        i++;
+      } 
+    }
     return profile;
   }
+
 
   const handleProfileFollow = async () => {
     const buttonFollow = await page.$x("//button[text()='Follow']");
@@ -80,7 +94,7 @@ const puppeteer = require('puppeteer');
       count = 0;
     }
     await page.waitFor(10402);
-    const profile = handleProfileToComment();
+    const profile = handleProfileToComment(giveawayToGo.numberProfilesPerComment);
     
     await page.waitFor('textarea');
     await page.type('textarea', profile, {delay: 790});
