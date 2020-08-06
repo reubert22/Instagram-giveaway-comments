@@ -45,6 +45,13 @@ const puppeteer = require('puppeteer');
     return profile;
   }
 
+  const handleProfileFollow = async () => {
+    const buttonFollow = await page.$x("//button[text()='Follow']");
+    if (buttonFollow.length > 0) {
+      await buttonFollow[0].click();
+    } 
+  }
+
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
   await page.goto(targetPageUrl);
@@ -57,6 +64,7 @@ const puppeteer = require('puppeteer');
   
   const giveawayToGo = handleRedirect();
   await page.goto(giveawayToGo.profile);
+  handleProfileFollow();
   await page.waitFor(5000);
   await page.goto(giveawayToGo.giveaway);
 
@@ -66,6 +74,7 @@ const puppeteer = require('puppeteer');
       await page.waitFor(15000);
       const giveawayToGo = handleRedirect();
       await page.goto(giveawayToGo.profile);
+      handleProfileFollow();
       await page.waitFor(6000);
       await page.goto(giveawayToGo.giveaway);
       count = 0;
