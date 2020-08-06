@@ -1,9 +1,9 @@
 {
   "dependencies": {
+    "env-cmd": "^10.1.0",
     "puppeteer": "^2.1.1"
   },
   "scripts": {
     "start": "env-cmd node index.js"
   }
 }
-  
